@@ -264,7 +264,7 @@ async function main() {
       e.image =
         "https://gateway.pinata.cloud/ipfs/" + imgDirHash + "/" + i + ".png";
 
-      let filename = "metadata-files/" + index;
+      let filename = "metadata-files/" + i;
       let data = JSON.stringify(e);
       fs.writeFileSync(filename + ".json", data);
     });
@@ -274,7 +274,7 @@ async function main() {
 
     let metadataDirHash = await uploadFilesToIFPS(
       "./metadata-files",
-      "metadata-files"
+      "metadata_files"
     );
     if (metadataDirHash > 0) {
       console.log("The metadata hash on IPFS is: " + metadataDirHash);
