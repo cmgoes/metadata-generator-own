@@ -20,7 +20,7 @@ contract MemberFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://gateway.pinata.cloud/ipfs/QmbWCJuiaSBQopoDGsEnPZgDx6tQNFABGY7JDg7RoCavzq/";
+    string public baseURI = "https://gateway.pinata.cloud/ipfs/QmaXMX6QLcVESt7DvtKt3Cz4YnkoX2d5oG1ug54UFc58pS/";
 
     /*
      * Enforce the existence of only 100 OpenSea creatures.
