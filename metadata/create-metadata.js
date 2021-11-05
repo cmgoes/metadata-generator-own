@@ -344,7 +344,7 @@ pinata
 
 // pinataTest();
 
-const uploadFilesToIFPS = function (filePath, ipfs_file_name) {
+const uploadFilesToIFPS = async function  (filePath, ipfs_file_name) {
   const sourcePath = filePath;
   const options = {
     pinataMetadata: {
@@ -359,7 +359,7 @@ const uploadFilesToIFPS = function (filePath, ipfs_file_name) {
     },
   };
 
-  return pinata
+  let res = await pinata
     .pinFromFS(sourcePath, options)
     .then((result) => {
       //handle results here
@@ -371,6 +371,8 @@ const uploadFilesToIFPS = function (filePath, ipfs_file_name) {
       console.log(err);
       return "";
     });
+    
+    return res
 };
 
 main();
