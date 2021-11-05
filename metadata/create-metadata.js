@@ -162,7 +162,8 @@ const FACTORY_ABI = [
 ];
 
 async function main() {
-  length = 9500;
+  // length = 9500;
+  length = 50;
   index = 0;
   // if (fs.existsSync('metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-') + '.json')) {
   // if (fs.existsSync("./metadata-files")) {
