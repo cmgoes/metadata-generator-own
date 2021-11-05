@@ -14,7 +14,25 @@ contract Member is ERC721Tradable {
     {}
 
     function baseTokenURI() override public pure returns (string memory) {
-        return "https://creatures-api.opensea.io/api/creature/";
+        return "https://gateway.pinata.cloud/ipfs/QmbWCJuiaSBQopoDGsEnPZgDx6tQNFABGY7JDg7RoCavzq/";
+    }
+
+    function tokenURI(uint256 _tokenId)
+        public
+        pure
+        override
+        returns (string memory)
+    {
+        return
+            string(
+                abi.encodePacked(
+                    abi.encodePacked(
+                        baseTokenURI(),
+                        Strings.toString(_tokenId)
+                    ),
+                    ".json"
+                )
+            );
     }
 
     function contractURI() public pure returns (string memory) {
