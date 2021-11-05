@@ -258,7 +258,7 @@ async function main() {
     );
   });
 
-  let imgDirHash = uploadFilesToIFPS("./images_nft", "nft_images");
+  let imgDirHash = await uploadFilesToIFPS("./images_nft", "nft_images");
   if (imgDirHash.length > 0) {
     allMetadata.forEach((e, i) => {
       e.image =
@@ -272,7 +272,7 @@ async function main() {
     console.log(allMetadata[0]);
     console.log(allMetadata[1]);
 
-    let metadataDirHash = uploadFilesToIFPS(
+    let metadataDirHash = await uploadFilesToIFPS(
       "./metadata-files",
       "metadata-files"
     );
@@ -359,7 +359,7 @@ const uploadFilesToIFPS = async function  (filePath, ipfs_file_name) {
     },
   };
 
-  let res = await pinata
+  return pinata
     .pinFromFS(sourcePath, options)
     .then((result) => {
       //handle results here
@@ -371,8 +371,6 @@ const uploadFilesToIFPS = async function  (filePath, ipfs_file_name) {
       console.log(err);
       return "";
     });
-    
-    return res
 };
 
 main();
