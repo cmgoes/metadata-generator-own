@@ -244,14 +244,47 @@ async function main() {
     index++;
   }
 
-  allMetadata.forEach((e) => {
-    e.attributes[0];
+  allMetadata.forEach((e, i) => {
+    generateNftImg(
+      i,
+      ...e.attributes.map((attribute) => {
+        attribute.value;
+      })
+    );
   });
+
+  let imgDirHash = uploadFilesToIFPS("./images_nft", "nft_images");
+  if (imgDirHash.length > 0) {
+    allMetadata.forEach((e, i) => {
+      e.image =
+        "https://gateway.pinata.cloud/ipfs/" + imgDirHash + "/" + i + ".png";
+
+      let filename = "metadata-files/" + index;
+      let data = JSON.stringify(characterMetadata);
+      fs.writeFileSync(filename + ".json", data);
+    });
+
+    console.log(allMetadata[0]);
+    console.log(allMetadata[1]);
+
+    let metadataDirHash = uploadFilesToIFPS(
+      "./metadata-files",
+      "metadata-files"
+    );
+    if (metadataDirHash > 0) {
+      console.log("The metadata hash on IPFS is: " + metadataDirHash);
+    } else {
+      console.log("failed to upload metadata files");
+    }
+  } else {
+    console.log("failed to upload nft images");
+  }
 }
 
 main();
 
 const generateNftImg = function (
+  filename,
   background,
   body,
   eyes,
@@ -260,15 +293,15 @@ const generateNftImg = function (
   pot,
   top
 ) {
-  // Background-Body-Mouth-Top-Pot-Hand
+  // Background-Body-Mouth-Eyes-Top-Pot-Hand
 
-  let backgroundImg = "./images/Cactus/Background/Blue.png";
-  let bodyImg = "./images/Cactus/Body/Dotted.png";
-  let eyesImg = "./images/Cactus/Eyes/420.png";
-  let handsImg = "./images/Cactus/Hands/666.png";
-  let mouthdImg = "./images/Cactus/Mouth/Buck.png";
-  let potImg = "./images/Cactus/Pot/Banana.png";
-  let topImg = " ./images/Cactus/Top/Afro.png";
+  let backgroundImg = "./images/Cactus/Background/" + background + ".png";
+  let bodyImg = "./images/Cactus/Body/" + body + ".png";
+  let eyesImg = "./images/Cactus/Eyes/" + eyes + ".png";
+  let handsImg = "./images/Cactus/Hands/" + hands + ".png";
+  let mouthdImg = "./images/Cactus/Mouth/" + mouth + ".png";
+  let potImg = "./images/Cactus/Pot/" + pot + ".png";
+  let topImg = " ./images/Cactus/Top/" + top + ".png";
 
   //  fs.readFile('image.jpg', function(err, data) {
   //   if (err) throw err // Fail if the file can't be read.
@@ -279,19 +312,21 @@ const generateNftImg = function (
   //   console.log('Server running at http://localhost:8124/')
   // })
 
+  // Background-Body-Mouth-Eyes-Top-Pot-Hand
+
   images(backgroundImg) //Load image from file
-    //加载图像文件
     // .size(400)                          //Geometric scaling the image to 400 pixels width
-    //等比缩放图像到400像素宽
-    .draw(images(bodyImg), 0, 0) //Drawn logo at coordinates (10,10)
-    //在(10,10)处绘制Logo
-    .save("output.jpg", {
-      //Save the image to a file, with the quality of 50
-      quality: 100, //保存图片到文件,图片质量为50
+    .draw(images(bodyImg), 0, 0) //Drawn logo at coordinates (0,0)
+    .draw(images(mouthdImg), 0, 0)
+    .draw(images(eyesImg), 0, 0)
+    .draw(images(topImg), 0, 0)
+    .draw(images(potImg), 0, 0)
+    .draw(images(handsImg), 0, 0)
+    .save("./images_nft/" + filename + ".png", {
+      //Save the image to a file, with the quality of 100
+      quality: 100,
     });
 };
-
-generateNftImg();
 
 pinata
   .testAuthentication()
@@ -306,11 +341,11 @@ pinata
 
 // pinataTest();
 
-const uploadFilesToIFPS = function (filePath) {
+const uploadFilesToIFPS = function (filePath, ipfs_file_name) {
   const sourcePath = filePath;
   const options = {
     pinataMetadata: {
-      name: "metadata-files",
+      name: ipfs_file_name,
       keyvalues: {
         customKey: "customValue",
         customKey2: "customValue2",
@@ -320,14 +355,17 @@ const uploadFilesToIFPS = function (filePath) {
       cidVersion: 0,
     },
   };
-  pinata
+
+  return pinata
     .pinFromFS(sourcePath, options)
     .then((result) => {
       //handle results here
       console.log(result);
+      return result["IpfsHash"];
     })
     .catch((err) => {
       //handle error here
       console.log(err);
+      return "";
     });
 };
