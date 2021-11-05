@@ -303,7 +303,7 @@ const generateNftImg = function (
   let handsImg = "./images/Cactus/Hands/" + hands + ".png";
   let mouthdImg = "./images/Cactus/Mouth/" + mouth + ".png";
   let potImg = "./images/Cactus/Pot/" + pot + ".png";
-  let topImg = " ./images/Cactus/Top/" + top + ".png";
+  let topImg = "./images/Cactus/Top/" + top + ".png";
 
   //  fs.readFile('image.jpg', function(err, data) {
   //   if (err) throw err // Fail if the file can't be read.
