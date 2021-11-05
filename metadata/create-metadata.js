@@ -247,9 +247,13 @@ async function main() {
   allMetadata.forEach((e, i) => {
     generateNftImg(
       i,
-      ...e.attributes.map((attribute) => {
-        attribute.value;
-      })
+      e.attributes[0].value,
+      e.attributes[1].value,
+      e.attributes[2].value,
+      e.attributes[3].value,
+      e.attributes[4].value,
+      e.attributes[5].value,
+      e.attributes[6].value,
     );
   });
 
