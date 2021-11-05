@@ -281,8 +281,6 @@ async function main() {
   }
 }
 
-main();
-
 const generateNftImg = function (
   filename,
   background,
@@ -369,3 +367,5 @@ const uploadFilesToIFPS = function (filePath, ipfs_file_name) {
       return "";
     });
 };
+
+main();
