@@ -265,7 +265,7 @@ async function main() {
         "https://gateway.pinata.cloud/ipfs/" + imgDirHash + "/" + i + ".png";
 
       let filename = "metadata-files/" + index;
-      let data = JSON.stringify(characterMetadata);
+      let data = JSON.stringify(e);
       fs.writeFileSync(filename + ".json", data);
     });
 
