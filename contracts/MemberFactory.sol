@@ -20,7 +20,7 @@ contract MemberFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://creatures-api.opensea.io/api/factory/";
+    string public baseURI = "https://gateway.pinata.cloud/ipfs/QmbWCJuiaSBQopoDGsEnPZgDx6tQNFABGY7JDg7RoCavzq/";
 
     /*
      * Enforce the existence of only 100 OpenSea creatures.
@@ -137,7 +137,7 @@ contract MemberFactory is FactoryERC721, Ownable {
     }
 
     function tokenURI(uint256 _optionId) override external view returns (string memory) {
-        return string(abi.encodePacked(baseURI, Strings.toString(_optionId)));
+        return string(abi.encodePacked(baseURI, Strings.toString(_optionId), ".json"));
     }
 
     /**

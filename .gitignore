@@ -1,3 +1,5 @@
+build
+metadata/metadata-files/*
 # Logs
 logs
 *.log
