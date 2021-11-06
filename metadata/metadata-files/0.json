@@ -1,0 +1,14 @@
+{
+    "name": "Cactus 0",
+    "description": "Oasis DAO NFT No.0",
+    "image": "",
+    "attributes": [
+      { "trait_type": "Background", "value": "Desert" },
+      { "trait_type": "Body", "value": "Light" },
+      { "trait_type": "Eyes", "value": "Dizzy" },
+      { "trait_type": "Hands", "value": "Peace" },
+      { "trait_type": "Mouth", "value": "Yummy" },
+      { "trait_type": "Pot", "value": "TheBox" },
+      { "trait_type": "Top", "value": "Playboy" }
+    ]
+  }
