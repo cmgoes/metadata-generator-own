@@ -43,10 +43,10 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
      * @param _to address of the future owner of the token
      */
     function mintTo(address _to) public onlyOwner {
-        uint256 newTokenId = _getNextTokenId();
+        uint256 newTokenId = _randomnizeTokenId();
         _mint(_to, newTokenId);
         //_incrementTokenId();
-		_randomnizeTokenId();
+		// _randomnizeTokenId();
     }
 
     /**
@@ -70,13 +70,13 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
 	*/
 
 	function _randomnizeTokenId() internal returns (uint) {
-		uint _currentTokenId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))) % 1000;
+		uint256 _randomId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))) % 20;
 		NONCE++;
-		if (!ReleasedCheck[_currentTokenId]){
-			_randomnizeTokenId;
+		if (ReleasedCheck[_randomId]){
+			return _randomnizeTokenId();
 		}
-		ReleasedCheck[_currentTokenId] = true;
-		return _currentTokenId;
+		ReleasedCheck[_randomId] = true;
+		return _randomId;
 	}
 
     function baseTokenURI() virtual public pure returns (string memory);
