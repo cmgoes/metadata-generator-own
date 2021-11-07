@@ -70,7 +70,7 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
 	*/
 
 	function _randomnizeTokenId() internal returns (uint) {
-		uint256 _randomId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))) % 20;
+		uint256 _randomId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))) % 9500;
 		NONCE++;
 		if (ReleasedCheck[_randomId]){
 			return _randomnizeTokenId();
