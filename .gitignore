@@ -1,5 +1,5 @@
 build
-metadata/metadata-files/*
+metadata/metadata-files/
 # Logs
 logs
 *.log

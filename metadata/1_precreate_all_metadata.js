@@ -1,6 +1,8 @@
 // const DungeonsAndDragons = artifacts.require("DungeonsAndDragonsCharacter");
 const fs = require("fs");
 
+NUM_OF_NFTS = 9500;
+
 let opts_Background = ["Blue", "Brick", "Brown", "Desert", "Oasis", "Purple"];
 let opts_Body = [
   "Dotted",
@@ -68,112 +70,27 @@ let opts_Top = [
   "SunGlasses",
 ];
 
-// const metadataTemple = {
-//   name: "",
-//   description: "",
-//   image: "",
-//   attributes: [
-//     {
-//       trait_type: "Background",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Body",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Eyes",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Hands",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Mouth",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Pot",
-//       value: "",
-//     },
-//     {
-//       trait_type: "Top",
-//       value: "",
-//     },
-//   ],
-// };
-// module.exports = async callback => {
-//     const dnd = await DungeonsAndDragons.deployed()
-//     length = await dnd.getNumberOfCharacters()
-//     index = 0
-//     while (index < length) {
-//         console.log('Let\'s get the overview of your character ' + index + ' of ' + length)
-//         let characterMetadata = metadataTemple
-//         let characterOverview = await dnd.characters(index)
-//         index++
-//         characterMetadata['name'] = characterOverview['name']
-//         if (fs.existsSync('metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-') + '.json')) {
-//             console.log('test')
-//             continue
-//         }
-//         console.log(characterMetadata['name'])
-//         characterMetadata['attributes'][0]['value'] = characterOverview['strength']['words'][0]
-//         characterMetadata['attributes'][1]['value'] = characterOverview['dexterity']['words'][0]
-//         characterMetadata['attributes'][2]['value'] = characterOverview['constitution']['words'][0]
-//         characterMetadata['attributes'][3]['value'] = characterOverview['intelligence']['words'][0]
-//         characterMetadata['attributes'][4]['value'] = characterOverview['wisdom']['words'][0]
-//         characterMetadata['attributes'][5]['value'] = characterOverview['charisma']['words'][0]
-//         filename = 'metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-')
-//         let data = JSON.stringify(characterMetadata)
-//         fs.writeFileSync(filename + '.json', data)
-//     }
-//     callback(dnd)
-// }
-
-const getRandomInt = function(max) {
+const getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
 };
 
-const FACTORY_ABI = [
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "_optionId",
-        type: "uint256",
-      },
-      {
-        name: "_toAddress",
-        type: "address",
-      },
-    ],
-    name: "mint",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
-
 async function main() {
-  length = 9500;
-  index = 0;
-  // if (fs.existsSync('metadata/' + characterMetadata['name'].toLowerCase().replace(/\s/g, '-') + '.json')) {
+  let length = NUM_OF_NFTS;
+  let index = 0;
   if (fs.existsSync("./" + "metadata-all.json")) {
     console.log("metadata.json already exists");
     return;
   }
 
   let allMetadata = [];
-
-  while (index < length) {
-    //   for (let index = 0; index < length; index++) {
+  while (index < NUM_OF_NFTS) {
     console.log("prepare the metadata for nft " + index + " of " + length);
+
     let characterMetadata = {
       name: "",
       description: "",
       image: "",
+      external_url: "",
       attributes: [
         {
           trait_type: "Background",
@@ -231,11 +148,6 @@ async function main() {
   }
 
   console.log("allMetadata length: ", allMetadata.length);
-
-  //   filename =
-  //     "metadata/" + characterMetadata["name"].toLowerCase().replace(/\s/g, "-");
-  //   let data = JSON.stringify(characterMetadata);
-  //   fs.writeFileSync(filename + ".json", data);
 
   fs.writeFileSync("./metadata-all.json", JSON.stringify(allMetadata));
 }
