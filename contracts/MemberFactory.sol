@@ -20,7 +20,8 @@ contract MemberFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://gateway.pinata.cloud/ipfs/QmaXMX6QLcVESt7DvtKt3Cz4YnkoX2d5oG1ug54UFc58pS/";
+    // string public baseURI = "https://gateway.pinata.cloud/ipfs/QmaXMX6QLcVESt7DvtKt3Cz4YnkoX2d5oG1ug54UFc58pS/";
+    string public baseURI = "https://ipfs.io/ipfs/Qme6WczTaT9DXo7JZgtwUFuEk9ejbVqSAwDmzCL91pvRFp/";
 
     /*
      * Enforce the existence of only 100 OpenSea creatures.
@@ -56,11 +57,11 @@ contract MemberFactory is FactoryERC721, Ownable {
     }
 
     function name() override external pure returns (string memory) {
-        return "OpenSeaCreature Item Sale";
+        return "OasisDAO Item Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "CPF";
+        return "OPF";
     }
 
     function supportsFactoryInterface() override public pure returns (bool) {
