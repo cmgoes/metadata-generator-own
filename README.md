@@ -51,14 +51,18 @@ yarn truffle migrate --network live
 Look for your newly deployed contract address in the logs!
 
 
-# Mint NFTs
+# How to mint NFTs
 
-```
-export OWNER_ADDRESS="<my_address>"
-export NFT_CONTRACT_ADDRESS="<deployed_contract_address>"
-export FACTORY_CONTRACT_ADDRESS="<deployed_factory_contract_address>"
+```bash
+export INFURA_KEY="9aa3d95b3bc440fa88ea12eaa4456161" # or you can use ALCHEMY_KEY, run: export ALCHEMY_KEY="<alchemy_project_id>"
+export MNEMONIC="<metmask_mnemonic>" # 12 recovery phrases of your address
+export OWNER_ADDRESS="<my_address>" # the address to pay gas fee and receive the NFT
+export NFT_CONTRACT_ADDRESS="<deployed_contract_address>" # currently the nft contract address on rinkeby testnet is 0x220486d3701634215D366D297087E11366C8A05e
 export NETWORK="rinkeby"
-node scripts/mint.js
+
+# Before run this command, make sure dependencies are installed. if not run: `yarn `
+node scripts/mint_nft.js
 ```
 
 # Testing
+TDB
