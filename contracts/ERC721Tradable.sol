@@ -38,11 +38,26 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
         _initializeEIP712(_name);
     }
 
+    // check if an address is contract address
+    function isContract(address addr) internal view returns (bool) {
+        uint256 size;
+        assembly {
+            size := extcodesize(addr)
+        }
+        return size > 0;
+    }
+
     /**
      * @dev Mints a token to an address with a tokenURI.
      * @param _to address of the future owner of the token
      */
     function mintTo(address _to) public {
+        // block those cross-contract calls
+        require(
+            !isContract(msgSender()),
+            "cannot be invoked by a smart contract"
+        );
+
         uint256 newTokenId = _randomnizeTokenId();
         _mint(_to, newTokenId);
         //_incrementTokenId();
