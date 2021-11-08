@@ -35,16 +35,16 @@ node metadata/create-metadata.js
 1. Follow the steps above to get a Rinkeby node API key
 2. Using your API key and the mnemonic for your MetaMask wallet (make sure you're using a MetaMask seed phrase that you're comfortable using for testing purposes), run:
 
-```
-export ALCHEMY_KEY="<alchemy_project_id>" # or you can use INFURA_KEY
-export MNEMONIC="<metmask_mnemonic>"
-DEPLOY_ACCESSORIES_SALE=1 yarn truffle migrate --network rinkeby
+```bash
+export INFURA_KEY="9aa3d95b3bc440fa88ea12eaa4456161" # or you can use ALCHEMY_KEY, run: export ALCHEMY_KEY="<alchemy_project_id>"
+export MNEMONIC="<metmask_mnemonic>" # 12 recovery phrases of your address
+DEPLOY_CREATURES=1 yarn truffle migrate --network rinkeby
 ```
 
 ## Ethereum mainnet
 Make sure your wallet has at least a few dollars worth of ETH in it. Then run:
 
-```
+```bash
 yarn truffle migrate --network live
 ```
 
