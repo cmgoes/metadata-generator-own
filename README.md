@@ -38,7 +38,7 @@ node metadata/create-metadata.js
 ```
 export ALCHEMY_KEY="<alchemy_project_id>" # or you can use INFURA_KEY
 export MNEMONIC="<metmask_mnemonic>"
-DEPLOY_ACCESSORIES_SALE=1 yarn truffle migrate --network rinkeby
+DEPLOY_CREATURES=1 yarn truffle migrate --network rinkeby
 ```
 
 ## Ethereum mainnet
