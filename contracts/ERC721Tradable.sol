@@ -33,6 +33,18 @@ abstract contract ERC721Tradable is
     uint256 private _currentTokenId = 0;
     uint256 private NONCE;
     mapping(uint8 => uint256[]) private availableIds;
+    // by default, all users' level is 0 (general members)
+    // all levels: 0, 1, 2, 3, 4, 5
+    mapping(address => uint8) public levelOf;
+
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        address _proxyRegistryAddress
+    ) ERC721(_name, _symbol) {
+        proxyRegistryAddress = _proxyRegistryAddress;
+        _initializeEIP712(_name);
+    }
 
     /**
      *@dev add new available ids for a level
@@ -71,13 +83,12 @@ abstract contract ERC721Tradable is
         return _randomId;
     }
 
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        address _proxyRegistryAddress
-    ) ERC721(_name, _symbol) {
-        proxyRegistryAddress = _proxyRegistryAddress;
-        _initializeEIP712(_name);
+    /**
+     *@dev upgrade level for user by 1
+     */
+    function upgradeLevelForUser(address _user) public onlyOwner {
+        require(levelOf[_user] < 5, "user is at highset level already");
+        levelOf[_user]++;
     }
 
     // check if an address is contract address
@@ -99,9 +110,18 @@ abstract contract ERC721Tradable is
             !isContract(msgSender()),
             "cannot be invoked by a smart contract"
         );
-        uint256 newTokenId = _getNextTokenId();
-        _mint(_to, newTokenId);
-        _incrementTokenId();
+
+        // For mint nft of level 1, 2, 3, 4, 5, use random id
+        // For level 0 (general member), use incremental id
+        if (levelOf[_to] > 0) {
+            // TODO: before mint higher level nft, burn the user's previous nft first
+
+            _mint(_to, _randomnizeTokenId(levelOf[_to]));
+        } else {
+            uint256 newTokenId = _getNextTokenId();
+            _mint(_to, newTokenId);
+            _incrementTokenId();
+        }
     }
 
     /**
