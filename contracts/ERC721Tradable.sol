@@ -21,13 +21,16 @@ contract ProxyRegistry {
  * @title ERC721Tradable
  * ERC721Tradable - ERC721 contract that whitelists a trading address, and has minting functionality.
  */
-abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTransaction, Ownable {
+abstract contract ERC721Tradable is
+    ContextMixin,
+    ERC721Enumerable,
+    NativeMetaTransaction,
+    Ownable
+{
     using SafeMath for uint256;
 
     address proxyRegistryAddress;
     uint256 private _currentTokenId = 0;
-	uint256 private NONCE;
-	mapping(uint256 => bool) ReleasedCheck;
 
     constructor(
         string memory _name,
@@ -57,11 +60,9 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
             !isContract(msgSender()),
             "cannot be invoked by a smart contract"
         );
-
-        uint256 newTokenId = _randomnizeTokenId();
+        uint256 newTokenId = _getNextTokenId();
         _mint(_to, newTokenId);
-        //_incrementTokenId();
-		// _randomnizeTokenId();
+        _incrementTokenId();
     }
 
     /**
@@ -75,38 +76,35 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
     /**
      * @dev increments the value of _currentTokenId
      */
-    //function _incrementTokenId() private {
-    //    _currentTokenId++;
-    //}
+    function _incrementTokenId() private {
+        _currentTokenId++;
+    }
 
-	/**
-	 *@dev randomnize the token ID with the current time and nonce
-	 *@return uint256 for the random token ID
-	*/
+    function baseTokenURI() public pure virtual returns (string memory);
 
-	function _randomnizeTokenId() internal returns (uint) {
-		uint256 _randomId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))) % 9500;
-		NONCE++;
-		if (ReleasedCheck[_randomId]){
-			return _randomnizeTokenId();
-		}
-		ReleasedCheck[_randomId] = true;
-		return _randomId;
-	}
-
-    function baseTokenURI() virtual public pure returns (string memory);
-
-    function tokenURI(uint256 _tokenId) override public pure returns (string memory) {
-        return string(abi.encodePacked(baseTokenURI(), Strings.toString(_tokenId), ".json"));
+    function tokenURI(uint256 _tokenId)
+        public
+        pure
+        override
+        returns (string memory)
+    {
+        return
+            string(
+                abi.encodePacked(
+                    baseTokenURI(),
+                    Strings.toString(_tokenId),
+                    ".json"
+                )
+            );
     }
 
     /**
      * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-less listings.
      */
     function isApprovedForAll(address owner, address operator)
-        override
         public
         view
+        override
         returns (bool)
     {
         // Whitelist OpenSea proxy contract for easy trading.
@@ -121,12 +119,7 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
     /**
      * This is used instead of msg.sender as transactions won't be sent by the original token owner, but by OpenSea.
      */
-    function _msgSender()
-        internal
-        override
-        view
-        returns (address sender)
-    {
+    function _msgSender() internal view override returns (address sender) {
         return ContextMixin.msgSender();
     }
 }
