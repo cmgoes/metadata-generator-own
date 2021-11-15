@@ -10,7 +10,7 @@ import "./ERC721Tradable.sol";
  */
 contract Member is ERC721Tradable {
     constructor(address _proxyRegistryAddress)
-        ERC721Tradable("OasisDAO Member", "ODM", _proxyRegistryAddress)
+        ERC721Tradable("Oasis Critters", "ODC", _proxyRegistryAddress)
     {}
 
     function baseTokenURI() override public pure returns (string memory) {

@@ -31,6 +31,45 @@ abstract contract ERC721Tradable is
 
     address proxyRegistryAddress;
     uint256 private _currentTokenId = 0;
+    uint256 private NONCE;
+    mapping(uint8 => uint256[]) private availableIds;
+
+    /**
+     *@dev add new available ids for a level
+     */
+    function addAvailableIdsForLevel(uint8 _nftLevel, uint256[] memory _ids)
+        public
+        onlyOwner
+    {
+        for (uint256 i = 0; i < _ids.length; i++) {
+            availableIds[_nftLevel].push(_ids[i]);
+        }
+    }
+
+    /**
+     *@dev randomnize the token ID with the current time and nonce
+     *@return uint256 for the random token ID
+     */
+
+    function _randomnizeTokenId(uint8 _nftLevel) internal returns (uint256) {
+        require(
+            availableIds[_nftLevel].length > 0,
+            "all NFTs minted for the level"
+        );
+        // get a random index of the array availableIds
+        uint256 _randomIndex = uint256(
+            keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))
+        ) % availableIds[_nftLevel].length;
+        NONCE++;
+        // read the id at the index _randomIndex
+        uint256 _randomId = availableIds[_nftLevel][_randomIndex];
+        // remove the id from array availableIds
+        availableIds[_nftLevel][_randomIndex] = availableIds[_nftLevel][
+            availableIds[_nftLevel].length - 1
+        ];
+        availableIds[_nftLevel].pop();
+        return _randomId;
+    }
 
     constructor(
         string memory _name,
