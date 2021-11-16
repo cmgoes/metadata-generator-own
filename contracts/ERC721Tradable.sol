@@ -37,7 +37,6 @@ abstract contract ERC721Tradable is
     // all levels: 0, 1, 2, 3, 4, 5
     mapping(address => uint8) public levelOf;
 	// handle the NFT's owner
-	mapping(address => uint256) public ownerToId;
 
     constructor(
         string memory _name,
@@ -117,7 +116,7 @@ abstract contract ERC721Tradable is
         // For level 0 (general member), use incremental id
         if (levelOf[_to] > 0) {
             // TODO: before mint higher level nft, burn the user's previous nft first
-			uint256 oldTokenId = ownerToId[_to];
+			uint256 oldTokenId = tokenOfOwnerByIndex(_to, 0);
 			_burn(oldTokenId);
 
 			uint256 newTokenId = _randomnizeTokenId(levelOf[_to]);
@@ -125,7 +124,6 @@ abstract contract ERC721Tradable is
         } else {
             uint256 newTokenId = _getNextTokenId();
             _mint(_to, newTokenId);
-			ownerToId[_to] = newTokenId;
             _incrementTokenId();
         }
     }
