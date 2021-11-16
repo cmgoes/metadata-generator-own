@@ -27,7 +27,7 @@ contract MemberFactory is FactoryERC721, Ownable {
      * Enforce the existence of only 100 OpenSea creatures.
      */
     //uint256 CREATURE_SUPPLY = 100;
-	uint256 MEMBERS_SUPPLY = 10000;
+	uint256 MEMBERS_SUPPLY = 9500;
 
     /*
      * Six different options for minting Creatures (general, ambassador, researcher, developer, advisor, moderator).
@@ -84,7 +84,7 @@ contract MemberFactory is FactoryERC721, Ownable {
         }
     }
 
-    function mint(uint256 _optionId, address _toAddress) override public {
+    function mint(uint256 _optionId, address payable _toAddress) override public payable{
         // Must be sent from the owner proxy or owner.
         ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
         assert(
@@ -93,6 +93,13 @@ contract MemberFactory is FactoryERC721, Ownable {
                 _msgSender() == lootBoxNftAddress
         );
         require(canMint(_optionId));
+
+		//mint with 0.05ETH fee
+		require(msg.value >= 0.05 ether, "Not enough ETH send; check price!");
+		//_toAddress.balance -= 0.05 ether;
+		//proxyRegistryAddress.balance += 0.05 ether;
+		payable(address(this)).transfer(msg.value);
+
 
         Member oasisDaoMember = Member(nftAddress);
 		oasisDaoMember.mintTo(_toAddress);
@@ -147,7 +154,7 @@ contract MemberFactory is FactoryERC721, Ownable {
      */
     function transferFrom(
         address _from,
-        address _to,
+        address payable _to,
         uint256 _tokenId
     ) public {
         mint(_tokenId, _to);
