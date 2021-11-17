@@ -1,6 +1,6 @@
 const pinataSDK = require("@pinata/sdk");
 const PINATA_API_KEY = process.env.PINATA_API_KEY;
-const PINATA_API_SECRET = process.env.PINATA_API_KEY;
+const PINATA_API_SECRET = process.env.PINATA_API_SECRET;
 const pinata = pinataSDK(PINATA_API_KEY, PINATA_API_SECRET);
 
 async function main() {
