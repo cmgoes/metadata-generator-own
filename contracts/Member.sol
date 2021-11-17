@@ -15,7 +15,7 @@ contract Member is ERC721Tradable {
 
     function baseTokenURI() override public pure returns (string memory) {
         // return "https://gateway.pinata.cloud/ipfs/QmaXMX6QLcVESt7DvtKt3Cz4YnkoX2d5oG1ug54UFc58pS/";
-        return "https://ipfs.io/ipfs/QmdJyuWmg7qY1qpvL9JGZSpFm5DG5VR6gjbgrPE4BV1dqv/";
+        return "https://ipfs.io/ipfs/QmeJDxv42eHtT47yrQMXKLWfMCRjaHhu6Yc2TGrz7FZUV8/";
     }
 
     function contractURI() public pure returns (string memory) {
