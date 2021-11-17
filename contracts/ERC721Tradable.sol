@@ -48,7 +48,7 @@ abstract contract ERC721Tradable is
         address _treasuryAddress
     ) ERC721(_name, _symbol) {
         proxyRegistryAddress = _proxyRegistryAddress;
-        treasuryAddress = _treasuryAddress;
+        treasuryAddress = payable(_treasuryAddress);
         _initializeEIP712(_name);
     }
 
