@@ -21,7 +21,7 @@ const generateNftImg = function (metadata, filename) {
     let img = images(
       TRAITS_IMAGES_PATH +
         "/" +
-        metadata["attributes"][1] +
+        metadata["attributes"][0]["value"] +
         "/" +
         metadata["attributes"][1]["trait_type"] +
         "/" +
@@ -34,7 +34,7 @@ const generateNftImg = function (metadata, filename) {
         images(
           TRAITS_IMAGES_PATH +
             "/" +
-            metadata["attributes"][0] +
+            metadata["attributes"][0]["value"] +
             "/" +
             metadata["attributes"][i] +
             "/" +
