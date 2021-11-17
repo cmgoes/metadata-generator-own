@@ -20,7 +20,7 @@ async function main() {
   allMetadata.forEach((e, i) => {
     e.image = NFT_IMAGES_BASE_URL + NFT_IMAGES_IPFS_HASH + "/" + i + ".png";
 
-    let filename = "metadata-files/" + i;
+    let filename = "metadata-files/" + (i + 1);
     let data = JSON.stringify(e);
     fs.writeFileSync(filename + ".json", data);
   });
