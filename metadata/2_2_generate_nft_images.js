@@ -16,7 +16,7 @@ async function main() {
 }
 
 const generateNftImg = function (metadata, filename) {
-  if (metadata["attributes"].length > 0) {
+  if (metadata["attributes"].length > 1) {
     // load the first layer
     let img = images(
       TRAITS_IMAGES_PATH +
