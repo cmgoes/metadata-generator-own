@@ -22,6 +22,8 @@ const DEPLOY_CREATURES_SALE = process.env.DEPLOY_CREATURES_SALE || DEPLOY_ALL;
 // This is to keep the historical behavior of this migration.
 const DEPLOY_CREATURES = process.env.DEPLOY_CREATURES || DEPLOY_CREATURES_SALE || DEPLOY_ALL || (! DEPLOY_ACCESSORIES);
 
+const TREASURY_ADDRESS = process.env.TREASURY_ADDRESS;
+
 module.exports = async (deployer, network, addresses) => {
   // OpenSea proxy registry addresses for rinkeby and mainnet.
   let proxyRegistryAddress = "";
@@ -32,7 +34,7 @@ module.exports = async (deployer, network, addresses) => {
   }
 
   if (DEPLOY_CREATURES) {
-    await deployer.deploy(Creature, proxyRegistryAddress, {gas: 5000000});
+    await deployer.deploy(Creature, proxyRegistryAddress, TREASURY_ADDRESS, {gas: 5000000});
   }
 
   if (DEPLOY_CREATURES_SALE) {

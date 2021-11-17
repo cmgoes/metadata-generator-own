@@ -9,8 +9,8 @@ import "./ERC721Tradable.sol";
  * Member - a contract for my non-fungible creatures.
  */
 contract Member is ERC721Tradable {
-    constructor(address _proxyRegistryAddress)
-        ERC721Tradable("Oasis Critters", "ODC", _proxyRegistryAddress)
+    constructor(address _proxyRegistryAddress, address _treasuryAddress)
+        ERC721Tradable("Oasis Critters", "ODC", _proxyRegistryAddress, _treasuryAddress)
     {}
 
     function baseTokenURI() override public pure returns (string memory) {
