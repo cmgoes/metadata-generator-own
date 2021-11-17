@@ -36,8 +36,6 @@ const generateNftImg = function (metadata, filename) {
             "/" +
             metadata["attributes"][0]["value"] +
             "/" +
-            metadata["attributes"][i] +
-            "/" +
             metadata["attributes"][i]["trait_type"] +
             "/" +
             metadata["attributes"][i]["value"] +
