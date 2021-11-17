@@ -23,9 +23,9 @@ const generateNftImg = function (metadata, filename) {
         "/" +
         metadata["attributes"][1] +
         "/" +
-        metadata["attributes"][i]["trait_type"] +
+        metadata["attributes"][1]["trait_type"] +
         "/" +
-        metadata["attributes"][i]["value"] +
+        metadata["attributes"][1]["value"] +
         ".png"
     );
     // stack other layers in order
