@@ -72,11 +72,11 @@
     "orderOfLayer": [
       "Background",
       "Body",
-      "Eyes",
-      "Hands",
       "Mouth",
+      "Eyes",
+      "Top",
       "Pot",
-      "Top"
+      "Hands"
     ]
   },
   "Camel": {
