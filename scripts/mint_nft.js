@@ -20,18 +20,32 @@ if (!MNEMONIC || !NODE_API_KEY || !OWNER_ADDRESS || !NETWORK) {
 }
 
 const NFT_ABI = [
+  // {
+  //   constant: false,
+  //   inputs: [
+  //     {
+  //       name: "_to",
+  //       type: "address",
+  //     },
+  //   ],
+  //   name: "mintTo",
+  //   outputs: [],
+  //   payable: true,
+  //   stateMutability: "nonpayable",
+  //   type: "function",
+  // },
+
   {
-    constant: false,
     inputs: [
       {
+        internalType: "address",
         name: "_to",
         type: "address",
       },
     ],
     name: "mintTo",
     outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
 ];
@@ -85,8 +99,8 @@ async function main() {
     // }
 
     const result = await factoryContract.methods
-    //   .mint(DEFAULT_OPTION_ID, OWNER_ADDRESS)
-    .mint(DEFAULT_OPTION_ID, OWNER_ADDRESS)
+      //   .mint(DEFAULT_OPTION_ID, OWNER_ADDRESS)
+      .mint(DEFAULT_OPTION_ID, OWNER_ADDRESS)
       .send({ from: OWNER_ADDRESS });
     console.log("Minted creature. Transaction: " + result.transactionHash);
 
@@ -116,7 +130,7 @@ async function main() {
 
     const result = await nftContract.methods
       .mintTo(OWNER_ADDRESS)
-      .send({ from: OWNER_ADDRESS });
+      .send({ from: OWNER_ADDRESS, value: web3.utils.toWei('0.05', 'ether') });
     console.log("Minted creature. Transaction: " + result.transactionHash);
   } else {
     console.error(

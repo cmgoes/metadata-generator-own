@@ -9,13 +9,13 @@ import "./ERC721Tradable.sol";
  * Member - a contract for my non-fungible creatures.
  */
 contract Member is ERC721Tradable {
-    constructor(address _proxyRegistryAddress)
-        ERC721Tradable("OasisDAO Member", "ODM", _proxyRegistryAddress)
+    constructor(address _proxyRegistryAddress, address _treasuryAddress)
+        ERC721Tradable("Oasis Critters", "ODC", _proxyRegistryAddress, _treasuryAddress)
     {}
 
     function baseTokenURI() override public pure returns (string memory) {
         // return "https://gateway.pinata.cloud/ipfs/QmaXMX6QLcVESt7DvtKt3Cz4YnkoX2d5oG1ug54UFc58pS/";
-        return "https://ipfs.io/ipfs/Qme6WczTaT9DXo7JZgtwUFuEk9ejbVqSAwDmzCL91pvRFp/";
+        return "https://ipfs.io/ipfs/QmWRLpDpkeTxsCQABxcLTeAsJ7WsX9UbASKUznZydewp7b/";
     }
 
     function contractURI() public pure returns (string memory) {

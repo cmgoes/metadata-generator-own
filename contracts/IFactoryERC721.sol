@@ -47,5 +47,5 @@ interface FactoryERC721 {
      * @param _optionId the option id
      * @param _toAddress address of the future owner of the asset(s)
      */
-    function mint(uint256 _optionId, address _toAddress) external;
+    function mint(uint256 _optionId, address payable _toAddress) external payable;
 }

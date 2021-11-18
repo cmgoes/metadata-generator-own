@@ -1,8 +1,7 @@
 const pinataSDK = require("@pinata/sdk");
-const pinata = pinataSDK(
-  "f34550d9a0f522650952",
-  "7bf54289c43b6864285ee8a2d6dedde8a0b4a645c085fa1a1fe9bb775b0aa358"
-);
+const PINATA_API_KEY = process.env.PINATA_API_KEY;
+const PINATA_API_SECRET = process.env.PINATA_API_SECRET;
+const pinata = pinataSDK(PINATA_API_KEY, PINATA_API_SECRET);
 
 NFT_IMAGES_DIR = "./images_nft";
 
