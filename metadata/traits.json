@@ -1,0 +1,159 @@
+{
+  "Cactus": {
+    "amount": 9500,
+    "traits": {
+      "Background": ["Blue", "Brick", "Brown", "Desert", "Oasis", "Purple"],
+      "Body": [
+        "Dotted",
+        "Earth",
+        "Hamburger",
+        "Light",
+        "Normal",
+        "Pink",
+        "Sausage",
+        "Strawberry",
+        "Tree",
+        "Yellow"
+      ],
+      "Eyes": [
+        "420",
+        "Dizzy",
+        "Fury",
+        "Mike",
+        "Normal",
+        "Sleepy",
+        "Thinkin",
+        "Wink",
+        "xx"
+      ],
+      "Hands": ["666", "Gauntlet", "Joint", "OK", "Peace", "Sponge Glove"],
+      "Mouth": [
+        "Buck",
+        "Cavities",
+        "Mustache",
+        "Naughty",
+        "Normal",
+        "Pzzz",
+        "Rainbow",
+        "SausageLips",
+        "UWU",
+        "Wrinkle",
+        "Yell",
+        "Yummy"
+      ],
+      "Pot": [
+        "Banana",
+        "Basic",
+        "GreyMug",
+        "IceCream",
+        "PurplePot",
+        "TheBox",
+        "WhiteMug"
+      ],
+      "Top": [
+        "Afro",
+        "Axe",
+        "Babushka",
+        "BrokenHalo",
+        "Cap",
+        "CherryBomb",
+        "Cowboy",
+        "GobbleGobble",
+        "HelloKacti",
+        "Link",
+        "Mob",
+        "Mummy",
+        "OasisChain",
+        "Playboy",
+        "Scarf",
+        "SunGlasses"
+      ]
+    },
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Mouth",
+      "Eyes",
+      "Top",
+      "Pot",
+      "Hands"
+    ]
+  },
+  "Camel": {
+    "amount": 175,
+    "traits": {
+      "Background": [],
+      "Body": [],
+      "Back": [],
+      "Eyes": [],
+      "Top": [],
+      "Accessories": []
+    },
+    "orderOfLayer": ["Background", "Body", "Back", "Eyes", "Top", "Accessories"]
+  },
+  "Fox": {
+    "amount": 150,
+    "traits": {
+      "Background": [],
+      "Body": [],
+      "Mouth": [],
+      "Eyes": [],
+      "Clothes": [],
+      "Accessories": []
+    },
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Mouth",
+      "Eyes",
+      "Clothes",
+      "Accessories"
+    ]
+  },
+  "Meerkat": {
+    "amount": 100,
+    "traits": {
+      "Background": [],
+      "Body": [],
+      "Eyes": [],
+      "Mouth": [],
+      "Clothes": [],
+      "Accessories": [],
+      "Hand": []
+    },
+
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Eyes",
+      "Mouth",
+      "Clothes",
+      "Accessories",
+      "Hands"
+    ]
+  },
+  "Tortoise": {
+    "amount": 50,
+    "traits": {
+      "Background": [],
+      "Back": [],
+      "Body": [],
+      "Front": [],
+      "Eyes": [],
+      "Accessories": []
+    },
+    "orderOfLayer": [
+      "Background",
+      "Back",
+      "Body",
+      "Front",
+      "Eyes",
+      "Accessories"
+    ]
+  },
+  "Cactus Wren": {
+    "amount": 25,
+    "traits": {},
+    "orderOfLayer": []
+  }
+}

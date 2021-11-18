@@ -31,14 +31,85 @@ abstract contract ERC721Tradable is
 
     address proxyRegistryAddress;
     uint256 private _currentTokenId = 0;
+    uint256 private NONCE;
+    mapping(uint8 => uint256[]) private availableIds;
+    // by default, all users' level is 0 (general members)
+    // all levels: 0, 1, 2, 3, 4, 5
+    mapping(address => uint8) public levelOf;
+    mapping(address => bool) public isUserMinted;
+    uint256 public priceOfGeneralMemberNFT = 0.05 ether;
+    address payable public treasuryAddress;
 
+    string private err_noNFTLeftAtLevel = "no NFT available for the level";
     constructor(
         string memory _name,
         string memory _symbol,
-        address _proxyRegistryAddress
+        address _proxyRegistryAddress,
+        address _treasuryAddress
     ) ERC721(_name, _symbol) {
         proxyRegistryAddress = _proxyRegistryAddress;
+        treasuryAddress = payable(_treasuryAddress);
         _initializeEIP712(_name);
+    }
+
+    /**
+     *@dev add new available ids for a level
+     */
+    function addAvailableIdsForLevel(uint8 _nftLevel, uint256[] memory _ids)
+        public
+        onlyOwner
+    {
+        for (uint256 i = 0; i < _ids.length; i++) {
+            availableIds[_nftLevel].push(_ids[i]);
+        }
+    }
+
+    function setPriceOfGeneralMemberNFT(uint256 price) public onlyOwner {
+        priceOfGeneralMemberNFT = price;
+    }
+
+    /**
+     *@dev randomnize the token ID with the current time and nonce
+     *@return uint256 for the random token ID
+     */
+
+    function _randomnizeTokenId(uint8 _nftLevel) internal returns (uint256) {
+        // get a random index of the array availableIds
+        uint256 _randomIndex = uint256(
+            keccak256(abi.encodePacked(block.timestamp, msg.sender, NONCE))
+        ) % availableIds[_nftLevel].length;
+        NONCE++;
+        // read the id at the index _randomIndex
+        uint256 _randomId = availableIds[_nftLevel][_randomIndex];
+        // remove the id from array availableIds
+        availableIds[_nftLevel][_randomIndex] = availableIds[_nftLevel][
+            availableIds[_nftLevel].length - 1
+        ];
+        availableIds[_nftLevel].pop();
+        return _randomId;
+    }
+
+    /**
+     *@dev upgrade level for a user by 1
+     */
+    function upgradeLevelForUser(address _user) public onlyOwner {
+        require(levelOf[_user] < 5, "user is at highset level already");
+        levelOf[_user]++;
+        isUserMinted[_user] = false;
+    }
+
+    /**
+     *@dev upgrade level for each user by 1
+     */
+    function upgradeLevelForBatchUsers(address[] memory _users)
+        public
+        onlyOwner
+    {
+        for (uint256 i = 0; i < _users.length; i++) {
+            require(levelOf[_users[i]] < 5, "user is at highset level already");
+            levelOf[_users[i]]++;
+            isUserMinted[_users[i]] = false;
+        }
     }
 
     // check if an address is contract address
@@ -54,15 +125,56 @@ abstract contract ERC721Tradable is
      * @dev Mints a token to an address with a tokenURI.
      * @param _to address of the future owner of the token
      */
-    function mintTo(address _to) public {
+    function mintTo(address _to) public payable {
         // block those cross-contract calls
         require(
             !isContract(msgSender()),
             "cannot be invoked by a smart contract"
         );
+
+        require(!isUserMinted[_to], "user can only have one NFT");
+
+        if (levelOf[_to] > 0) {
+            _mintRoleNFT(_to);
+        } else {
+            _mintGeneralMembersNFT(_to);
+        }
+        isUserMinted[_to] = true;
+    }
+
+    // For level 0 (general member), use incremental id
+    function _mintGeneralMembersNFT(address _to) private {
+        require(_currentTokenId < 9500, err_noNFTLeftAtLevel);
+
+        // transfer required amount of ETH before minting
+        require(
+            msg.value >= priceOfGeneralMemberNFT,
+            "not enough ETH send; check price!"
+        );
+        require(
+            treasuryAddress.send(msg.value), // 100000000000000 = 0.001 eth
+            "failed to transfer eth"
+        );
+
         uint256 newTokenId = _getNextTokenId();
+
         _mint(_to, newTokenId);
         _incrementTokenId();
+    }
+
+    // For minting nft of level 1, 2, 3, 4, 5, use random id
+    function _mintRoleNFT(address _to) private {
+        require(availableIds[levelOf[_to]].length > 0, err_noNFTLeftAtLevel);
+        // before mint higher level nft, burn the user's previous nft first
+        uint256 oldTokenId = tokenOfOwnerByIndex(_to, 0);
+        _burn(oldTokenId);
+        // put the burned nft id back to availableIds for role nft(higher levels)
+        if (levelOf[_to] >= 2) {
+            (availableIds[levelOf[_to] - 1]).push(oldTokenId);
+        }
+
+        uint256 newTokenId = _randomnizeTokenId(levelOf[_to]);
+        _mint(_to, newTokenId);
     }
 
     /**
@@ -121,5 +233,8 @@ abstract contract ERC721Tradable is
      */
     function _msgSender() internal view override returns (address sender) {
         return ContextMixin.msgSender();
+    }
+
+    receive() external payable {
     }
 }
