@@ -151,9 +151,9 @@
       "Accessories"
     ]
   },
-  "Cactus Wren": {
+  "Wren": {
     "amount": 25,
     "traits": {},
-    "orderOfLayer": []
+    "orderOfLayer": ["Background", "Body", "Eyes", "Clothes", "Beak"]
   }
 }
