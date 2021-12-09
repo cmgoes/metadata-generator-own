@@ -1,0 +1,14 @@
+{
+  "Snake": {
+    "amount": 150,
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Tail",
+      "Clothes",
+      "Eyes",
+      "Mouth",
+      "Head"
+    ]
+  }
+}

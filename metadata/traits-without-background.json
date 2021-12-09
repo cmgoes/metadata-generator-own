@@ -1,0 +1,74 @@
+{
+  "Cactus": {
+    "amount": 9500,
+    "orderOfLayer": [
+      "Body",
+      "Mouth",
+      "Eyes",
+      "Top",
+      "Pot",
+      "Hands"
+    ]
+  },
+  "Camel": {
+    "amount": 25,
+    "orderOfLayer": [
+      "Body",
+      "Back",
+      "Eyes",
+      "Top",
+      "Accessories"
+    ]
+  },
+  "Snake": {
+    "amount": 150,
+    "orderOfLayer": [
+      "Body",
+      "Tail",
+      "Clothes",
+      "Eyes",
+      "Mouth",
+      "Head"
+    ]
+  },
+  "Fox": {
+    "amount": 150,
+    "orderOfLayer": [
+      "Body",
+      "Mouth",
+      "Eyes",
+      "Clothes",
+      "Accessories"
+    ]
+  },
+  "Meerkat": {
+    "amount": 100,
+    "orderOfLayer": [
+      "Body",
+      "Eyes",
+      "Mouth",
+      "Clothes",
+      "Accessories",
+      "Hands"
+    ]
+  },
+  "Tortoise": {
+    "amount": 50,
+    "orderOfLayer": [
+      "Back",
+      "Body",
+      "Front",
+      "Eyes",
+      "Accessories"
+    ]
+  },
+  "Wren": {
+    "amount": 25,
+    "orderOfLayer": [
+      "Body",
+      "Eyes",
+      "Clothes",
+      "Beak"
+    ]
+  }
+}
