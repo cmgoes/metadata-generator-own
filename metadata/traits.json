@@ -80,7 +80,7 @@
     ]
   },
   "Camel": {
-    "amount": 175,
+    "amount": 25,
     "traits": {
       "Background": [],
       "Body": [],
@@ -90,6 +90,19 @@
       "Accessories": []
     },
     "orderOfLayer": ["Background", "Body", "Back", "Eyes", "Top", "Accessories"]
+  },
+  "Snake": {
+    "amount": 150,
+    "traits": {},
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Tail",
+      "Clothes",
+      "Eyes",
+      "Mouth",
+      "Head"
+    ]
   },
   "Fox": {
     "amount": 150,
