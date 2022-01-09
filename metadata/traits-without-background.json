@@ -1,6 +1,6 @@
 {
   "Cactus": {
-    "amount": 9500,
+    "amount": 0,
     "orderOfLayer": [
       "Body",
       "Mouth",
@@ -11,7 +11,7 @@
     ]
   },
   "Camel": {
-    "amount": 25,
+    "amount": 0,
     "orderOfLayer": [
       "Body",
       "Back",
@@ -21,7 +21,7 @@
     ]
   },
   "Snake": {
-    "amount": 150,
+    "amount": 0,
     "orderOfLayer": [
       "Body",
       "Tail",
@@ -32,7 +32,7 @@
     ]
   },
   "Fox": {
-    "amount": 150,
+    "amount": 0,
     "orderOfLayer": [
       "Body",
       "Mouth",
@@ -42,7 +42,7 @@
     ]
   },
   "Meerkat": {
-    "amount": 100,
+    "amount": 300,
     "orderOfLayer": [
       "Body",
       "Eyes",
