@@ -1,81 +1,13 @@
 {
   "Cactus": {
     "amount": 9500,
-    "traits": {
-      "Background": ["Blue", "Brick", "Brown", "Desert", "Oasis", "Purple"],
-      "Body": [
-        "Dotted",
-        "Earth",
-        "Hamburger",
-        "Light",
-        "Normal",
-        "Pink",
-        "Sausage",
-        "Strawberry",
-        "Tree",
-        "Yellow"
-      ],
-      "Eyes": [
-        "420",
-        "Dizzy",
-        "Fury",
-        "Mike",
-        "Normal",
-        "Sleepy",
-        "Thinkin",
-        "Wink",
-        "xx"
-      ],
-      "Hands": ["666", "Gauntlet", "Joint", "OK", "Peace", "Sponge Glove"],
-      "Mouth": [
-        "Buck",
-        "Cavities",
-        "Mustache",
-        "Naughty",
-        "Normal",
-        "Pzzz",
-        "Rainbow",
-        "SausageLips",
-        "UWU",
-        "Wrinkle",
-        "Yell",
-        "Yummy"
-      ],
-      "Pot": [
-        "Banana",
-        "Basic",
-        "GreyMug",
-        "IceCream",
-        "PurplePot",
-        "TheBox",
-        "WhiteMug"
-      ],
-      "Top": [
-        "Afro",
-        "Axe",
-        "Babushka",
-        "BrokenHalo",
-        "Cap",
-        "CherryBomb",
-        "Cowboy",
-        "GobbleGobble",
-        "HelloKacti",
-        "Link",
-        "Mob",
-        "Mummy",
-        "OasisChain",
-        "Playboy",
-        "Scarf",
-        "SunGlasses"
-      ]
-    },
     "orderOfLayer": [
       "Background",
       "Body",
+      "Pot",
       "Mouth",
       "Eyes",
       "Top",
-      "Pot",
       "Hands"
     ]
   },
@@ -89,7 +21,14 @@
       "Top": [],
       "Accessories": []
     },
-    "orderOfLayer": ["Background", "Body", "Back", "Eyes", "Top", "Accessories"]
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Back",
+      "Eyes",
+      "Top",
+      "Accessories"
+    ]
   },
   "Snake": {
     "amount": 150,
@@ -134,7 +73,6 @@
       "Accessories": [],
       "Hand": []
     },
-
     "orderOfLayer": [
       "Background",
       "Body",
@@ -167,6 +105,12 @@
   "Wren": {
     "amount": 25,
     "traits": {},
-    "orderOfLayer": ["Background", "Body", "Eyes", "Clothes", "Beak"]
+    "orderOfLayer": [
+      "Background",
+      "Body",
+      "Eyes",
+      "Clothes",
+      "Beak"
+    ]
   }
 }

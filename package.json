@@ -6,7 +6,7 @@
   "scripts": {
     "ganache-cli": "ganache-cli -d -p 7545 --gasLimit=10000000",
     "start": "some command to be run",
-	"test": "DEPLOY_ALL=1 truffle test"
+    "test": "DEPLOY_ALL=1 truffle test"
   },
   "repository": {
     "type": "git",
