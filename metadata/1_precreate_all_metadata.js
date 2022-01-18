@@ -1,155 +1,90 @@
-// const DungeonsAndDragons = artifacts.require("DungeonsAndDragonsCharacter");
 const fs = require("fs");
 
 NUM_OF_NFTS = 9500;
 
-let opts_Background = ["Blue", "Brick", "Brown", "Desert", "Oasis", "Purple"];
-let opts_Body = [
-  "Dotted",
-  "Earth",
-  "Hamburger",
-  "Light",
-  "Normal",
-  "Pink",
-  "Sausage",
-  "Strawberry",
-  "Tree",
-  "Yellow",
-];
-let opts_Eyes = [
-  "420",
-  "Dizzy",
-  "Fury",
-  "Mike",
-  "Normal",
-  "Sleepy",
-  "Thinkin",
-  "Wink",
-  "xx",
-];
-let opts_Hands = ["666", "Gauntlet", "Joint", "OK", "Peace", "Sponge Glove"];
-let opts_Mouth = [
-  "Buck",
-  "Cavities",
-  "Mustache",
-  "Naughty",
-  "Normal",
-  "Pzzz",
-  "Rainbow",
-  "SausageLips",
-  "UWU",
-  "Wrinkle",
-  "Yell",
-  "Yummy",
-];
-let opts_Pot = [
-  "Banana",
-  "Basic",
-  "GreyMug",
-  "IceCream",
-  "PurplePot",
-  "TheBox",
-  "WhiteMug",
-];
-let opts_Top = [
-  "Afro",
-  "Axe",
-  "Babushka",
-  "BrokenHalo",
-  "Cap",
-  "CherryBomb",
-  "Cowboy",
-  "GobbleGobble",
-  "HelloKacti",
-  "Link",
-  "Mob",
-  "Mummy",
-  "OasisChain",
-  "Playboy",
-  "Scarf",
-  "SunGlasses",
-];
+TRAITS_IMAGES_PATH = "./images";
+
+let allTraits = JSON.parse(fs.readFileSync("./traits.json"));
 
 const getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
 };
 
 async function main() {
-  let length = NUM_OF_NFTS;
-  let index = 0;
-  if (fs.existsSync("./" + "metadata-all.json")) {
-    console.log("metadata.json already exists");
-    return;
-  }
 
+  let index = 1;
   let allMetadata = [];
-  while (index < NUM_OF_NFTS) {
-    console.log("prepare the metadata for nft " + index + " of " + length);
+  Object.keys(allTraits).forEach((roleName) => {
+    for (let i = 0; i < allTraits[roleName]["amount"]; i++) {
+      let nftMetadata = {
+        name: "",
+        description: "",
+        image: "",
+        external_url: "",
+        attributes: [],
+      };
+      nftMetadata["name"] = "Critter #" + index;
 
-    let characterMetadata = {
-      name: "",
-      description: "",
-      image: "",
-      external_url: "",
-      attributes: [
-        {
-          trait_type: "Background",
-          value: "",
-        },
-        {
-          trait_type: "Body",
-          value: "",
-        },
-        {
-          trait_type: "Eyes",
-          value: "",
-        },
-        {
-          trait_type: "Hands",
-          value: "",
-        },
-        {
-          trait_type: "Mouth",
-          value: "",
-        },
-        {
-          trait_type: "Pot",
-          value: "",
-        },
-        {
-          trait_type: "Top",
-          value: "",
-        },
-      ],
-    };
+      nftMetadata["description"] =
+        "Oasis DAO membership is 10,000 unique NFTs with randomly generated rare traits and attributes. 9,500 General Member NFTs will be open to public minting, the remaining 500 role-based NFTs can only be earned through active participation and contribution to Oasis DAO.  In order to partake in decentralized governance and gain access to exclusive membership benefits, you must hold an Oasis Critters NFT.";
 
-    characterMetadata["name"] = "Cactus " + index;
-    console.log(characterMetadata["name"]);
-    characterMetadata["description"] = "Oasis DAO NFT No." + index;
-    console.log(characterMetadata["description"]);
+      nftMetadata["attributes"].push({
+        trait_type: "Type",
+        value: roleName,
+      });
 
-    characterMetadata["attributes"][0]["value"] =
-      opts_Background[getRandomInt(opts_Background.length)];
-    characterMetadata["attributes"][1]["value"] =
-      opts_Body[getRandomInt(opts_Body.length)];
-    characterMetadata["attributes"][2]["value"] =
-      opts_Eyes[getRandomInt(opts_Eyes.length)];
-    characterMetadata["attributes"][3]["value"] =
-      opts_Hands[getRandomInt(opts_Hands.length)];
-    characterMetadata["attributes"][4]["value"] =
-      opts_Mouth[getRandomInt(opts_Mouth.length)];
-    characterMetadata["attributes"][5]["value"] =
-      opts_Pot[getRandomInt(opts_Pot.length)];
-    characterMetadata["attributes"][6]["value"] =
-      opts_Top[getRandomInt(opts_Top.length)];
+      let is_adventure = false
+      allTraits[roleName]["orderOfLayer"].forEach((layer) => {
+        let images = fs.readdirSync(
+          TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer
+        );
+        let selected_attribute = images[getRandomInt(images.length)].split(".")[0]
+        if (layer == "Pot" && selected_attribute == "Adventure") {
+          is_adventure = true
+          let images = fs.readdirSync(
+            TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/Adventure"
+          );
+          selected_attribute = "Adventure/" + images[getRandomInt(images.length)].split(".")[0]
+        }
+        if (layer == "Top") {
+          if (is_adventure) {
+            let images = fs.readdirSync(
+              TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/Adventure"
+            );
+            selected_attribute = "Adventure/" + images[getRandomInt(images.length)].split(".")[0]
+          } else {
+            var index = images.indexOf("Adventure");
+            if (index !== -1) {
+              images.splice(index, 1);
+            }
+            selected_attribute = images[getRandomInt(images.length)].split(".")[0]
+          }
+        }
 
-    allMetadata.push(characterMetadata);
-    index++;
-  }
+        let path = TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/" + selected_attribute
+        if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
+          let images = fs.readdirSync(
+            TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/" + selected_attribute
+          );
+          selected_attribute = selected_attribute + "/" + images[getRandomInt(images.length)].split(".")[0]
+        }
+        nftMetadata["attributes"].push({
+          trait_type: layer,
+          value: selected_attribute,
+        });
+      });
+
+      allMetadata.push(nftMetadata);
+
+      index++;
+    }
+  });
 
   console.log("allMetadata length: ", allMetadata.length);
-
-  fs.writeFileSync("./metadata-all.json", JSON.stringify(allMetadata));
+  let fileName1 = "./metadata-all-" + Date.now() + ".json"
+  let fileName2 = "./metadata-all.json"
+  fs.writeFileSync(fileName1, JSON.stringify(allMetadata));
+  fs.writeFileSync(fileName2, JSON.stringify(allMetadata));
 }
 
 main();
