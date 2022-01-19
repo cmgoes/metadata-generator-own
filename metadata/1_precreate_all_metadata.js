@@ -81,7 +81,7 @@ async function main() {
   });
 
   console.log("allMetadata length: ", allMetadata.length);
-  let fileName1 = "./metadata-all-" + Date.now() + ".json"
+  let fileName1 = "./metadata-all-" + new Date().toISOString().split(".")[0] + ".json"
   let fileName2 = "./metadata-all.json"
   fs.writeFileSync(fileName1, JSON.stringify(allMetadata));
   fs.writeFileSync(fileName2, JSON.stringify(allMetadata));
