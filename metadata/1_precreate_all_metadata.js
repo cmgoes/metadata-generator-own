@@ -33,32 +33,63 @@ async function main() {
         value: roleName,
       });
 
-      let is_adventure = false
+      
       allTraits[roleName]["orderOfLayer"].forEach((layer) => {
         let images = fs.readdirSync(
           TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer
         );
         let selected_attribute = images[getRandomInt(images.length)].split(".")[0]
-        if (layer == "Pot" && selected_attribute == "Adventure") {
-          is_adventure = true
-          let images = fs.readdirSync(
-            TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/Adventure"
-          );
-          selected_attribute = "Adventure/" + images[getRandomInt(images.length)].split(".")[0]
-        }
-        if (layer == "Top") {
-          if (is_adventure) {
-            let images = fs.readdirSync(
-              TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/Adventure"
-            );
-            selected_attribute = "Adventure/" + images[getRandomInt(images.length)].split(".")[0]
-          } else {
-            var index = images.indexOf("Adventure");
-            if (index !== -1) {
-              images.splice(index, 1);
+        if(roleName == "Cactus") {
+            if (layer == "Mouth") {          
+            // console.log("Before Mouth layer NFT metadata", nftMetadata["attributes"]);
+            if (nftMetadata["attributes"][nftMetadata["attributes"].length-1].value == "Mystery/Ghost") {
+                nftMetadata["attributes"].pop();
+                nftMetadata["attributes"].pop();
+                nftMetadata["attributes"].pop();
+                nftMetadata["attributes"].push({
+                    trait_type: "Top",
+                    value: "Mystery/Ghost",
+                });
+                // console.log("NFT metadata", nftMetadata);
+                return;            
+            } else if(nftMetadata["attributes"][nftMetadata["attributes"].length-1].value == "Adventure/Mob") {
+                // console.log("NFT metadata", nftMetadata);
+                return;
+            } else if(nftMetadata["attributes"][nftMetadata["attributes"].length-1].value == "Mystery/Mummy") {
+                nftMetadata["attributes"].pop();
+                nftMetadata["attributes"].pop();
+                nftMetadata["attributes"].push({
+                    trait_type: "Top",
+                    value: "Mystery/Mummy",
+                });
+                // console.log("NFT metadata in Mummy case", nftMetadata["attributes"]);
+                return;
+            } 
             }
-            selected_attribute = images[getRandomInt(images.length)].split(".")[0]
-          }
+
+            if (layer == "Top") {          
+            // console.log("Before Mouth layer NFT metadata", nftMetadata["attributes"]);
+            if(nftMetadata["attributes"][nftMetadata["attributes"].length-1].value.includes("Adventure/")) {
+                selected_attribute = "Adventure";
+            }
+            else if (nftMetadata["attributes"][nftMetadata["attributes"].length-1].value.includes("Comic/")) {
+                selected_attribute = "Comic";                       
+            } else if(nftMetadata["attributes"][nftMetadata["attributes"].length-1].value.includes("Hip hop/")) {            
+                selected_attribute = "Hip hop";
+            } else if(nftMetadata["attributes"][nftMetadata["attributes"].length-1].value.includes("Mystery/")) {
+                selected_attribute = "Mystery";
+            } 
+            }
+
+            if (layer == "Hands") {                  
+                if(nftMetadata["attributes"].length == 4 || nftMetadata["attributes"].length == 5 || nftMetadata["attributes"].length == 7 && !nftMetadata["attributes"][nftMetadata["attributes"].length-2].value.includes("Adventure/")) {
+                    if(selected_attribute == "Adventure") {
+                        console.log("Non Adventure mismatch", nftMetadata["attributes"]);
+                        selected_attribute = images[getRandomInt(images.length - 1) + 1 ].split(".")[0];
+                        console.log("Updated attribute", selected_attribute);
+                    }
+                }            
+            }
         }
 
         let path = TRAITS_IMAGES_PATH + "/" + roleName + "/" + layer + "/" + selected_attribute
@@ -75,7 +106,6 @@ async function main() {
       });
 
       allMetadata.push(nftMetadata);
-
       index++;
     }
   });
